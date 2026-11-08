@@ -20,7 +20,11 @@ jobs:
       - name: Testar protocolo
         run: bash tests/run.sh
       - name: Compilar e verificar Android
-        run: gradle --no-daemon assembleDebug lintDebug
+        run: |
+          if ! gradle --no-daemon assembleDebug lintDebug; then
+            find app/build -name 'lint-results-debug.txt' -type f -exec cat {} \;
+            exit 1
+          fi
       - uses: actions/upload-artifact@v4
         with:
           name: MeshLivre-APK-debug

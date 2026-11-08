@@ -25,7 +25,7 @@ public final class MainActivity extends Activity implements MeshRadio.Events {
   BluetoothManager manager=getSystemService(BluetoothManager.class);adapter=manager==null?null:manager.getAdapter();
   android.content.SharedPreferences prefs=getSharedPreferences("identity",0);node=prefs.getString("node",null);
   if(node==null){node=UUID.randomUUID().toString();prefs.edit().putString("node",node).apply();}
-  LinearLayout root=new LinearLayout(this);root.setOrientation(1);root.setPadding(dp(18),dp(12),dp(18),dp(10));root.setBackgroundColor(Color.rgb(16,24,39));setContentView(root);
+  LinearLayout root=new LinearLayout(this);root.setOrientation(LinearLayout.VERTICAL);root.setPadding(dp(18),dp(12),dp(18),dp(10));root.setBackgroundColor(Color.rgb(16,24,39));setContentView(root);
   root.setOnApplyWindowInsetsListener((v,insets)->{root.setPadding(dp(18),dp(12)+insets.getSystemWindowInsetTop(),dp(18),dp(10)+insets.getSystemWindowInsetBottom());return insets;});
   root.addView(label("MESH LIVRE",26,Color.rgb(85,230,193)));root.addView(label("ALPHA 0.1  •  Chat coletivo sem internet",13,Color.LTGRAY));
   count=label("0 vizinhos conectados",16,Color.WHITE);root.addView(count);
@@ -33,9 +33,9 @@ public final class MainActivity extends Activity implements MeshRadio.Events {
   LinearLayout actions=new LinearLayout(this);root.addView(actions);button(actions,"Iniciar",()->startNetwork());button(actions,"Parar",()->stopNetwork());
   LinearLayout discover=new LinearLayout(this);root.addView(discover);button(discover,"Ficar visível",()->visible());button(discover,"Buscar",()->search());
   state=label("Inicie a rede nos aparelhos. Mantenha o app aberto.",13,Color.LTGRAY);root.addView(state);
-  ScrollView deviceScroll=new ScrollView(this);devices=new LinearLayout(this);devices.setOrientation(1);deviceScroll.addView(devices);root.addView(deviceScroll,new LinearLayout.LayoutParams(-1,dp(105)));
+  ScrollView deviceScroll=new ScrollView(this);devices=new LinearLayout(this);devices.setOrientation(LinearLayout.VERTICAL);deviceScroll.addView(devices);root.addView(deviceScroll,new LinearLayout.LayoutParams(-1,dp(105)));
   root.addView(label("Sala pública • participantes podem ler e retransmitir",12,Color.rgb(245,193,105)));
-  scroll=new ScrollView(this);messages=new LinearLayout(this);messages.setOrientation(1);scroll.addView(messages);root.addView(scroll,new LinearLayout.LayoutParams(-1,0,1));
+  scroll=new ScrollView(this);messages=new LinearLayout(this);messages.setOrientation(LinearLayout.VERTICAL);scroll.addView(messages);root.addView(scroll,new LinearLayout.LayoutParams(-1,0,1));
   input=edit("Escreva uma mensagem…",1000);input.setSingleLine(false);input.setMaxLines(3);root.addView(input);
   button(root,"Enviar à rede",()->sendMessage());
   if(adapter!=null)radio=new MeshRadio(adapter,this);else status("Este aparelho não oferece Bluetooth compatível.");
